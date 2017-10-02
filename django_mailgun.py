@@ -153,6 +153,7 @@ class MailgunBackend(BaseEmailBackend):
             response = requests.post(self._api_url + "messages",
                     auth=("api", self._access_key),
                     data=content, headers=headers)
+
         except:
             if not self.fail_silently:
                 raise
@@ -163,7 +164,7 @@ class MailgunBackend(BaseEmailBackend):
                 raise MailgunAPIError(response)
             return False
 
-        return True
+        return response.json()
 
     def send_messages(self, email_messages):
         """Sends one or more EmailMessage objects and returns the number of
