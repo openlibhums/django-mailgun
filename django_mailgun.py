@@ -52,6 +52,7 @@ class MailgunBackend(BaseEmailBackend):
         try:
             self._access_key = access_key or getattr(settings, 'MAILGUN_ACCESS_KEY')
             self._server_name = server_name or getattr(settings, 'MAILGUN_SERVER_NAME')
+            self._require_tls = getattr(settings, 'MAILGUN_REQUIRE_TLS')
         except AttributeError:
             if fail_silently:
                 self._access_key, self._server_name = None
@@ -117,6 +118,8 @@ class MailgunBackend(BaseEmailBackend):
             post_data.append(('text', email_message.body,))
             post_data.append(('subject', email_message.subject,))
             post_data.append(('from', from_email,))
+            print(self._require_tls)
+            post_data.append(('o:require-tls', self._require_tls))
             # get our recipient variables if they were passed in
             recipient_variables = email_message.extra_headers.pop('recipient_variables', None)
             if recipient_variables is not None:
