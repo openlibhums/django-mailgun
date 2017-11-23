@@ -176,9 +176,19 @@ class MailgunBackend(BaseEmailBackend):
         if not email_messages:
             return
 
+        api_responses = []
+
         num_sent = 0
         for message in email_messages:
-            if self._send(message):
+            response = self._send(message)
+            if response:
                 num_sent += 1
 
-        return num_sent
+            api_responses.append({'to': message.to, 'response': response})
+
+        print('we are returning this number', num_sent)
+
+        if num_sent == 1:
+            return api_responses[0]
+        else:
+            return api_responses
