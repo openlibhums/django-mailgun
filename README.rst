@@ -22,11 +22,17 @@ Add the following to your ``settings.py``::
     EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
     MAILGUN_ACCESS_KEY = 'ACCESS-KEY'
     MAILGUN_SERVER_NAME = 'SERVER-NAME'
+    MAILGUN_REQUIRE_TLS = True/False
 
 Replace ``ACCESS-KEY`` with the "API-KEY" value from your Mailgun account details and
 ``SERVER-NAME`` with the last part of your "API Base URL"
 (eg. https://api.mailgun.net/v3/**<your_server_name>**), also found in your Mailgun
 account details.
+
+When setting `MAILGUN_REQUIRE_TLS` to False, Mailgun will deliver the message over a plain SMTP connection when an error occurs
+establishing the TLS connection. Set this to True if you prefer the message to only be delivered over TLS and an error to be
+raised when this is not possible.
+
 
 Now, when you use ``django.core.mail.send_mail``, Mailgun will send the messages.
 
