@@ -23,15 +23,19 @@ Add the following to your ``settings.py``::
     MAILGUN_ACCESS_KEY = 'ACCESS-KEY'
     MAILGUN_SERVER_NAME = 'SERVER-NAME'
     MAILGUN_REQUIRE_TLS = True/False
+    MAILGUN_API_URL = 'https://api.mailgun.net/v3/'
 
 Replace ``ACCESS-KEY`` with the "API-KEY" value from your Mailgun account details and
 ``SERVER-NAME`` with the last part of your "API Base URL"
 (eg. https://api.mailgun.net/v3/**<your_server_name>**), also found in your Mailgun
 account details.
 
-When setting `MAILGUN_REQUIRE_TLS` to False, Mailgun will deliver the message over a plain SMTP connection when an error occurs
+When setting ``MAILGUN_REQUIRE_TLS`` to ``False``, Mailgun will deliver the message over a plain SMTP connection when an error occurs
 establishing the TLS connection. Set this to True if you prefer the message to only be delivered over TLS and an error to be
 raised when this is not possible.
+
+Maulgun has introduced a new URL endpoint for their EU server. If your domain is created under the EU region you will need to
+set the ``MAILGUN_API_URL`` to ``'https://api.eu.mailgun.net/v3/'``
 
 
 Now, when you use ``django.core.mail.send_mail``, Mailgun will send the messages.

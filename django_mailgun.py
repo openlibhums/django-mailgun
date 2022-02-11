@@ -18,6 +18,8 @@ version = __version__
 #
 # https://documentation.mailgun.com/user_manual.html#sending-via-smtp
 # https://documentation.mailgun.com/api-sending.html#sending
+
+DEFAULT_API_URL = "https://api.mailgun.net/v3/"
 #
 # structure is SMTP_HEADER: (api_name, data_transform_function)
 HEADERS_MAP = {
@@ -59,7 +61,10 @@ class MailgunBackend(BaseEmailBackend):
             else:
                 raise
 
-        self._api_url = "https://api.mailgun.net/v3/%s/" % self._server_name
+        self._api_url = "%s%s/" % (
+                getattr(settings, "MAILGUN_API_URL", DEFAULT_API_URL),
+                self._server_name,
+        )
         self._headers_map = HEADERS_MAP
 
     def open(self):

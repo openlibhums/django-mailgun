@@ -15,7 +15,8 @@ def test_no_configuration():
 def test_configuration():
     settings.configure(
         MAILGUN_ACCESS_KEY=123,
-        MAILGUN_SERVER_NAME='abc'
+        MAILGUN_SERVER_NAME='abc',
+        MAILGUN_API_URL="https://example.org/",
     )
     MailgunBackend()
 
