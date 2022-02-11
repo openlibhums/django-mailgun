@@ -118,7 +118,6 @@ class MailgunBackend(BaseEmailBackend):
             post_data.append(('text', email_message.body,))
             post_data.append(('subject', email_message.subject,))
             post_data.append(('from', from_email,))
-            print(self._require_tls)
             post_data.append(('o:require-tls', self._require_tls))
             # get our recipient variables if they were passed in
             recipient_variables = email_message.extra_headers.pop('recipient_variables', None)
@@ -186,7 +185,6 @@ class MailgunBackend(BaseEmailBackend):
 
             api_responses.append({'to': message.to, 'response': response})
 
-        print('we are returning this number', num_sent)
 
         if num_sent == 1:
             return api_responses[0]
