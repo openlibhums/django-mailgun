@@ -5,7 +5,7 @@ import requests
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 from django.core.mail.message import sanitize_address
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from requests.packages.urllib3.filepost import encode_multipart_formdata
 
@@ -143,7 +143,7 @@ class MailgunBackend(BaseEmailBackend):
                 if email_message.reply_to:
                     post_data.append((
                         "h:Reply-To",
-                        ", ".join(map(force_text, email_message.reply_to)),
+                        ", ".join(map(force_str, email_message.reply_to)),
                     ))
             except AttributeError:
                 pass
